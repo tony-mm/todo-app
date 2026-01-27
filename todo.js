@@ -29,5 +29,4 @@ function renderTasks(taskArray) {
         li.textContent = task.title;
         taskList.appendChild(li);
     });
-
 }
