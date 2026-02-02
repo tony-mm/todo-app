@@ -1,4 +1,6 @@
 const input = document.querySelector('#task-input');
+const priorityInput = document.querySelector('#priority-input');
+const dateInput = document.querySelector('#date-input');
 const addBtn = document.querySelector('#add-btn');
 const taskList = document.querySelector('#task-list-ul');
 const profilePicInput = document.querySelector('#profile-pic-input');
@@ -15,12 +17,12 @@ function displayCurrentDate() {
     const today = new Date();
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    
+
     const dayName = days[today.getDay()];
     const monthName = months[today.getMonth()];
     const date = today.getDate();
     const year = today.getFullYear();
-    
+
     currentDateDisplay.textContent = `${dayName}, ${monthName} ${date}, ${year}`;
 }
 
@@ -53,7 +55,7 @@ profilePicInput.addEventListener('change', (e) => {
 // Load profile picture from localStorage on page load
 window.addEventListener('load', () => {
     displayCurrentDate();
-    
+
     const savedProfilePic = localStorage.getItem('profilePic');
     if (savedProfilePic) {
         profilePicImg.src = savedProfilePic;
@@ -67,7 +69,7 @@ statusBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         statusBtns.forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
-        
+
         if (e.target.textContent === 'Today') {
             currentFilter = 'today';
         } else if (e.target.textContent === 'Pending') {
@@ -75,7 +77,7 @@ statusBtns.forEach(btn => {
         } else if (e.target.textContent === 'Overdue') {
             currentFilter = 'overdue';
         }
-        
+
         renderTasks(tasks);
     });
 });
@@ -86,25 +88,27 @@ addBtn.addEventListener('click', () => {
     const task = {
         id: Date.now(),
         title: input.value,
-        dueDate: '',
-        completed: false
+        dueDate: dateInput.value,
+        completed: false,
+        priority: priorityInput.value
     };
 
     tasks.push(task);
     input.value = '';
-    
+    dateInput.value = '';
+
     renderTasks(tasks);
 });
 
 function getTaskStatus(dueDate) {
     if (!dueDate) return 'pending';
-    
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const due = new Date(dueDate);
     due.setHours(0, 0, 0, 0);
-    
+
     if (due.getTime() === today.getTime()) {
         return 'today';
     } else if (due.getTime() < today.getTime()) {
@@ -116,7 +120,7 @@ function getTaskStatus(dueDate) {
 
 function filterTasks(tasksArray) {
     if (currentFilter === 'all') return tasksArray;
-    
+
     return tasksArray.filter(task => {
         const status = getTaskStatus(task.dueDate);
         return status === currentFilter;
@@ -137,11 +141,27 @@ function renderTasks(taskArray) {
         return;
     }
 
+    // Sort tasks by priority
+    const priorityOrder = { high: 3, medium: 2, low: 1 };
+
+    filteredTasks.sort((a, b) => {
+        const priorityA = priorityOrder[a.priority] || 1; // Default to low (1) if undefined
+        const priorityB = priorityOrder[b.priority] || 1;
+        return priorityB - priorityA; // Descending order
+    });
+
     filteredTasks.forEach(task => {
         const li = document.createElement('li');
         li.className = 'task-item';
+        // Add priority class
+        if (task.priority) {
+            li.classList.add(`priority-${task.priority}`);
+        } else {
+            li.classList.add('priority-low'); // Default
+        }
+
         li.id = `task-${task.id}`;
-        
+
         // Checkbox
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
@@ -150,26 +170,26 @@ function renderTasks(taskArray) {
             task.completed = checkbox.checked;
             li.classList.toggle('completed', task.completed);
         });
-        
+
         // Task title and date container
         const titleContainer = document.createElement('div');
         titleContainer.style.flex = '1';
         titleContainer.style.display = 'flex';
         titleContainer.style.flexDirection = 'column';
         titleContainer.style.gap = '5px';
-        
+
         const titleSpan = document.createElement('span');
         titleSpan.className = 'task-title';
         titleSpan.textContent = task.title;
-        
+
         const dateSpan = document.createElement('span');
         dateSpan.style.fontSize = '12px';
         dateSpan.style.color = '#666666';
         dateSpan.textContent = task.dueDate ? `Due: ${task.dueDate}` : 'No due date';
-        
+
         titleContainer.appendChild(titleSpan);
         titleContainer.appendChild(dateSpan);
-        
+
         // Delete button
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'delete-btn';
@@ -178,7 +198,7 @@ function renderTasks(taskArray) {
             tasks = tasks.filter(t => t.id !== task.id);
             renderTasks(tasks);
         });
-        
+
         li.appendChild(checkbox);
         li.appendChild(titleContainer);
         li.appendChild(deleteBtn);
