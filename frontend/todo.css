@@ -1,0 +1,394 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Poppins, sans-serif;
+}
+
+.todo-container {
+    display: flex;
+    background-color: #efefef;
+    width: 100%;
+    height: 100vh;
+
+
+}
+
+
+#add-btn {
+    border: none;
+    border-radius: 5px;
+    background-color: #3454d1;
+    height: 35px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#add-btn:hover {
+    background-color: #2840a8;
+}
+
+#add-btn svg {
+    stroke: white;
+}
+
+#notice-btn {
+    background-color: #ffffff;
+    border: none;
+}
+
+#search {
+    background-color: #ffffff;
+    border: none;
+}
+
+.left-nav {
+    width: 250px;
+    min-width: 250px;
+    background-color: #ffffff83;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    border-color: #ffffffba;
+    font-family: P;
+    height: 100vh;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.nav-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    justify-content: space-evenly;
+}
+
+.nav-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: 2px solid #3454d1;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    margin-top: auto;
+}
+
+.main-area {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.nav-bar {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    height: 70px;
+    display: flex;
+    padding: 10px 10px;
+    align-items: center;
+    margin-left: 0;
+}
+
+.nav-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 50px;
+}
+
+.content-area {
+    flex: 1;
+    background-color: #efefef;
+    padding: 30px;
+    flex-direction: column;
+    align-items: center;
+    width: 100;
+    gap: 20px;
+
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.status button {
+    padding: 10px 20px;
+    border: 2px solid #3454d1;
+    background-color: #ffffff;
+    color: #3454d1;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.status button:hover {
+    background-color: #3454d1;
+    color: #ffffff;
+}
+
+.status button.active {
+    background-color: #3454d1;
+    color: #ffffff;
+}
+
+.left-nav button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    padding: 5px 10px;
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.left-nav button:hover {
+    background-color: #3454d130;
+    color: #3454d1ff;
+}
+
+.left-nav button img {
+    stroke: #3454d1;
+}
+
+.nav-actions button {
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    width: auto;
+    /* good for sidebars */
+    height: 30px;
+    /* keep aspect ratio */
+}
+
+.nav-bar h2 {
+    font-weight: 650;
+}
+
+.content-area h2 {
+    font-weight: 650;
+    font-size: 30px;
+    text-align: left;
+    width: 100%;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+.date-header {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.date-header h3 {
+    font-weight: 600;
+    font-size: 18px;
+    color: #666666;
+    margin: 0;
+    padding: 0;
+}
+
+.content-area input,
+.content-area select {
+    height: 60px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    outline: none;
+}
+
+#task-input {
+    flex: 3;
+}
+
+#date-input {
+    flex: 1;
+    cursor: text;
+}
+
+#priority-input {
+    flex: 1;
+    cursor: pointer;
+    background-color: white;
+    color: #333;
+}
+
+.main-area {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.task-list-ul li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: #ffffff;
+}
+
+#task-list-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#task-list-ul input[type="checkbox"] {
+    transform: scale(1);
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+    border-left: 5px solid transparent;
+}
+
+.priority-high {
+    border-left-color: #ff4d4d;
+}
+
+.priority-medium {
+    border-left-color: #ffa500;
+}
+
+.priority-low {
+    border-left-color: #4caf50;
+}
+
+.task-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.task-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #3454d1;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.task-title {
+    flex: 1;
+    font-size: 16px;
+    color: #333333;
+    word-break: break-word;
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+}
+
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    color: #999999;
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.delete-btn svg {
+    stroke: black;
+    transition: stroke 0.3s ease;
+}
+
+.profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-pic-placeholder {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #3454d1;
+    padding: 0px;
+    cursor: pointer;
+    border: 2px solid #3454d1;
+    transition: all 0.3s ease;
+}
+
+.profile-pic-placeholder:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.profile-pic-image {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid #3454d1;
+    transition: all 0.3s ease;
+}
+
+.profile-pic-image:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.tasks {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+}

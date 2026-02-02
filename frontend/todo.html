@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="todo.css">
+</head>
+
+<body>
+    <div class="todo-container">
+        <div class="left-nav">
+            <div class="logo-container">
+                <img id="logo" src="images/logo.svg" alt="logo" width="100px" height="30px">
+            </div>
+            <div class="nav-top">
+                <button id="inbox">
+                    <img src="images/inbox.svg" alt="inbox" width="20px" height="20px">
+                    Inbox
+                </button>
+                <button id="calendar">
+                    <img src="images/calendar-days.svg" alt="calendar" width="20px" height="20px">
+                    Calendar
+                </button>
+                <button id="projects">
+                    <img src="images/folder.svg" alt="projects" width="20px" height="20px">
+                    Projects
+                </button>
+                <button id="analytics">
+                    <img src="images/chart-area.svg" alt="analytics" width="20px" height="20px">
+                    Analytics
+                </button>
+            </div>
+            <div class="nav-bottom">
+                <button id="profile" class="profile-btn">
+                    <img id="profile-pic" src="images/user.svg" alt="profile" width="20px" height="20px"
+                        class="profile-pic-placeholder">
+                    <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
+                    Profile
+                </button>
+                <button id="settings">
+                    <img src="images/settings.svg" alt="settings" width="20px" height="20px  ">
+                    Settings
+                </button>
+                <button id="help">
+                    <img src="images/circle-question-mark.svg" alt="help" width="20px" height="20px">
+                    Help
+                </button>
+            </div>
+        </div>
+        <div class="main-area">
+            <div class="nav-bar">
+                <h2>Dashboard</h2>
+                <div class="nav-actions">
+                    <button id="search">
+                        <img src="images/search.svg" alt="search" width="auto" height="25px">
+                    </button>
+                    <button id="notice-btn">
+                        <img src="images/bell.svg" alt="notice" width="auto" height="25px">
+                    </button>
+                    <button id="add-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg> Add Task</button>
+                </div>
+            </div>
+            <div class="content-area">
+                <div class="date-header">
+                    <h3 id="current-date"></h3>
+                </div>
+                <h2>Good Morning, Developer</h2>
+                <div class="tasks">
+                    <input type="text" id="task-input" placeholder="Enter your task here">
+                    <input type="date" id="date-input">
+                    <select id="priority-input">
+                        <option value="" disabled selected>Priority</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+
+                </div>
+                <div class="status">
+                    <button>Today</button>
+                    <button>Pending</button>
+                    <button>Overdue</button>
+                </div>
+                <div class="task-list">
+                    <ul id="task-list-ul">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="todo.js"></script>
+</body>
+
+</html>
