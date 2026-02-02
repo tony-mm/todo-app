@@ -12,11 +12,12 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "better-sqlite3": "^12.6.2",
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.1.7"
   },
   "engines": {
-  "node": "18.x"
-}
+    "node": "18.x"
+  }
 }
