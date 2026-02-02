@@ -12,6 +12,7 @@
             <div class="logo-container">
             <img id="logo" src="images/logo.svg" alt="logo" width="100px" height="30px">
             </div>
+            <div class="nav-top">
             <button id="inbox">
                 <img src="images/inbox.svg" alt="inbox" width="20px" height="20px">
                 Inbox
@@ -28,8 +29,11 @@
                 <img src="images/chart-area.svg" alt="analytics" width="20px" height="20px">
                 Analytics
             </button>
-            <button id="profile">
-                <img src="images/user.svg" alt="profile" width="20px" height="20px">
+            </div>
+            <div class="nav-bottom">
+            <button id="profile" class="profile-btn">
+                <img id="profile-pic" src="images/user.svg" alt="profile" width="20px" height="20px" class="profile-pic-placeholder">
+                <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
                 Profile
             </button>
             <button id="settings">
@@ -40,6 +44,7 @@
                 <img src="images/circle-question-mark.svg" alt="help" width="20px" height="20px">
                 Help
             </button>
+            </div>
         </div>
         <div class="main-area">
             <div class="nav-bar">
@@ -51,10 +56,13 @@
                     <button id="notice-btn">
                         <img src="images/bell.svg" alt="notice" width="auto" height="25px">
                     </button>
-                    <button id="add-btn">+ Add Task</button>
+                    <button id="add-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add Task</button>
                 </div>
             </div>
                 <div class="content-area">
+                    <div class="date-header">
+                        <h3 id="current-date"></h3>
+                    </div>
                     <h2>Good Morning, Developer</h2>
                     <div class="tasks">
                         <input type="text" id="task-input" placeholder="Enter your task here">
