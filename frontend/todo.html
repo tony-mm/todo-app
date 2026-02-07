@@ -6,18 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="todo.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+    <!-- Login / Register Overlay -->
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-box">
+            <h2 id="auth-title">Login</h2>
+            <form id="auth-form">
+                <input type="text" id="auth-username" placeholder="Username" style="display: none;">
+                <input type="email" id="auth-email" placeholder="Email" required>
+                <input type="password" id="auth-password" placeholder="Password" required>
+                <div class="auth-extra">
+                    <span id="forgot-password-link">Forgot Password?</span>
+                </div>
+                <button type="submit" id="auth-submit-btn">Login</button>
+            </form>
+            <div class="social-auth">
+                <div class="divider"><span>OR</span></div>
+                <button id="google-signin-btn" class="google-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="18px" height="18px">
+                        <path fill="#fbc02d"
+                            d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12 s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20 s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z">
+                        </path>
+                        <path fill="#e53935"
+                            d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039 l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z">
+                        </path>
+                        <path fill="#4caf50"
+                            d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36 c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z">
+                        </path>
+                        <path fill="#1565c0"
+                            d="M43.611,20.083L43.595,20L24,20v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571 c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z">
+                        </path>
+                    </svg> Sign in with Google
+                </button>
+            </div>
+            <p id="auth-switch">Don't have an account? <span id="switch-btn">Register</span></p>
+            <p id="auth-error" style="color: red; display: none;"></p>
+        </div>
+    </div>
+
+    <!-- Reset Password Overlay -->
+    <div id="reset-overlay" class="auth-overlay" style="display: none;">
+        <div class="auth-box">
+            <h2>Reset Password</h2>
+            <p style="font-size: 14px; margin-bottom: 20px; color: #666;">Enter your email to receive a reset link.</p>
+            <form id="reset-form">
+                <input type="email" id="reset-email" placeholder="Email" required>
+                <button type="submit">Send Reset Link</button>
+            </form>
+            <p><span id="back-to-login" style="color: #3454d1; cursor: pointer; font-size: 14px;">Back to Login</span>
+            </p>
+            <p id="reset-message" style="display: none;"></p>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Profile</h2>
+            <div class="profile-details">
+                <p><strong>Username:</strong> <span id="profile-username">Loading...</span></p>
+                <p><strong>Email:</strong> <span id="profile-email">Loading...</span></p>
+                <p><strong>Member Since:</strong> <span id="profile-joined">Loading...</span></p>
+            </div>
+            <button id="logout-btn">Logout</button>
+        </div>
+    </div>
+
     <div class="todo-container">
         <div class="left-nav">
             <div class="logo-container">
                 <img id="logo" src="images/logo.svg" alt="logo" width="100px" height="30px">
             </div>
             <div class="nav-top">
-                <button id="inbox">
-                    <img src="images/inbox.svg" alt="inbox" width="20px" height="20px">
-                    Inbox
+                <button id="dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
                 </button>
                 <button id="calendar">
                     <img src="images/calendar-days.svg" alt="calendar" width="20px" height="20px">
@@ -50,46 +123,397 @@
             </div>
         </div>
         <div class="main-area">
-            <div class="nav-bar">
-                <h2>Dashboard</h2>
-                <div class="nav-actions">
-                    <button id="search">
-                        <img src="images/search.svg" alt="search" width="auto" height="25px">
-                    </button>
-                    <button id="notice-btn">
-                        <img src="images/bell.svg" alt="notice" width="auto" height="25px">
-                    </button>
-                    <button id="add-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg> Add Task</button>
+            <!-- Dashboard View -->
+            <div id="dashboard-view">
+                <div class="nav-bar">
+                    <h2>Dashboard</h2>
+                    <div class="nav-actions">
+                        <input type="text" id="search-input" placeholder="Search tasks...">
+                        <button id="search">
+                            <img src="images/search.svg" alt="search" width="auto" height="25px">
+                        </button>
+                        <button id="notice-btn">
+                            <img src="images/bell.svg" alt="notice" width="auto" height="25px">
+                        </button>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <div class="date-header">
+                        <h3 id="current-date"></h3>
+                    </div>
+                    <h2>Good Morning, Developer</h2>
+                    <div class="tasks">
+                        <input type="text" id="task-input" placeholder="Enter your task here">
+                        <input type="date" id="date-input">
+                        <select id="priority-input">
+                            <option value="" disabled selected>Priority</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <button id="add-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg> Add Task</button>
+                    </div>
+                    <div class="status">
+                        <button class="active">All</button>
+                        <button>Today</button>
+                        <button>Pending</button>
+                        <button>Overdue</button>
+                    </div>
+                    <div class="task-list">
+                        <ul id="task-list-ul">
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="content-area">
-                <div class="date-header">
-                    <h3 id="current-date"></h3>
-                </div>
-                <h2>Good Morning, Developer</h2>
-                <div class="tasks">
-                    <input type="text" id="task-input" placeholder="Enter your task here">
-                    <input type="date" id="date-input">
-                    <select id="priority-input">
-                        <option value="" disabled selected>Priority</option>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
 
+            <!-- Calendar View -->
+            <div id="calendar-view" style="display: none;">
+                <div class="nav-bar">
+                    <h2>Calendar</h2>
+                    <div class="nav-actions">
+                        <input type="text" id="search-input" placeholder="Search tasks...">
+                        <button id="search">
+                            <img src="images/search.svg" alt="search" width="auto" height="25px">
+                        </button>
+                        <button id="notice-btn">
+                            <img src="images/bell.svg" alt="notice" width="auto" height="25px">
+                        </button>
+                    </div>
                 </div>
-                <div class="status">
-                    <button>Today</button>
-                    <button>Pending</button>
-                    <button>Overdue</button>
+                <div class="content-area">
+                    <div class="calendar-container">
+                        <!-- Calendar Header -->
+                        <div class="calendar-header">
+                            <button id="prev-month" class="nav-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+                            <h3 id="calendar-month-year">January 2024</h3>
+                            <button id="next-month" class="nav-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- View Switcher & Today Button -->
+                        <div class="calendar-controls">
+                            <div class="view-switcher">
+                                <button class="view-btn active" data-view="month">Month</button>
+                                <button class="view-btn" data-view="week">Week</button>
+                                <button class="view-btn" data-view="day">Day</button>
+                            </div>
+                            <button id="jump-today" class="btn btn-primary">Today</button>
+                        </div>
+
+                        <!-- Calendar Grid -->
+                        <div class="calendar-grid">
+                            <!-- Day Headers -->
+                            <div class="calendar-day-header">Sun</div>
+                            <div class="calendar-day-header">Mon</div>
+                            <div class="calendar-day-header">Tue</div>
+                            <div class="calendar-day-header">Wed</div>
+                            <div class="calendar-day-header">Thu</div>
+                            <div class="calendar-day-header">Fri</div>
+                            <div class="calendar-day-header">Sat</div>
+                            <!-- Date cells will be generated by JavaScript -->
+                        </div>
+                    </div>
                 </div>
-                <div class="task-list">
-                    <ul id="task-list-ul">
-                    </ul>
+            </div>
+
+            <!-- Date Tasks Modal -->
+            <div id="date-tasks-modal" class="modal" style="display: none;">
+                <div class="modal-content calendar-modal">
+                    <span class="close-modal" id="close-date-modal">&times;</span>
+                    <h2 id="modal-date-title">Tasks for January 1, 2024</h2>
+                    <div class="modal-tasks-list">
+                        <ul id="modal-task-list"></ul>
+                    </div>
+                    <div class="modal-add-task">
+                        <h3>Add Task for This Date</h3>
+                        <input type="text" id="modal-task-input" placeholder="Enter task title">
+                        <select id="modal-priority-input">
+                            <option value="" disabled selected>Priority</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <button id="modal-add-btn" class="btn btn-primary">Add Task</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Tasks Modal -->
+            <div id="project-tasks-modal" class="modal" style="display: none;">
+                <div class="modal-content project-modal">
+                    <span class="close-modal" id="close-project-modal">&times;</span>
+                    <h2 id="project-modal-title">Project Name</h2>
+                    <p id="project-modal-desc">Project Description</p>
+
+                    <div class="project-progress-container"
+                        style="margin: 20px 0; background: #eee; border-radius: 10px; height: 10px; position: relative; overflow: hidden;">
+                        <div id="project-progress-bar"
+                            style="height: 100%; background: #3454d1; width: 0%; transition: width 0.3s;"></div>
+                    </div>
+                    <span id="project-progress-text" style="font-size: 14px; color: #666;">0/0 Tasks Completed</span>
+
+                    <div class="modal-tasks-list" style="margin-top: 20px; max-height: 250px; overflow-y: auto;">
+                        <ul id="project-task-list" style="list-style: none; padding: 0;"></ul>
+                    </div>
+
+                    <div class="modal-add-task"
+                        style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+                        <h3>Add Task to Project</h3>
+                        <div class="project-task-input-group" style="display: flex; gap: 10px; margin-top: 10px;">
+                            <input type="text" id="project-task-input" placeholder="What needs to be done?"
+                                style="flex: 1;">
+                            <select id="project-task-priority" style="width: 100px;">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                            <button id="project-task-add-btn" class="btn btn-primary"
+                                style="padding: 10px 20px;">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects View -->
+            <div id="projects-view" style="display: none;">
+                <div class="nav-bar">
+                    <h2>Projects</h2>
+                    <div class="nav-actions">
+                        <button id="notice-btn">
+                            <img src="images/bell.svg" alt="notice" width="auto" height="25px">
+                        </button>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <div class="projects-header">
+                        <h2>My Projects</h2>
+                        <div class="add-project-form">
+                            <input type="text" id="project-name-input" placeholder="Project Name">
+                            <input type="text" id="project-desc-input" placeholder="Description (optional)">
+                            <button id="add-project-btn" class="btn btn-primary">Add Project</button>
+                        </div>
+                    </div>
+                    <div class="projects-list" id="projects-list-container">
+                        <!-- Projects will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div id="analytics-view" style="display: none;">
+                <div class="nav-bar">
+                    <h2>Analytics</h2>
+                    <div class="nav-actions">
+                        <button id="notice-btn">
+                            <img src="images/bell.svg" alt="notice" width="auto" height="25px">
+                        </button>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <div class="analytics-dashboard">
+                        <div class="stats-summary">
+                            <div class="stat-card">
+                                <h4 id="stat-total">0</h4>
+                                <p>Total Tasks</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4 id="stat-completed" style="color: #28a745;">0</h4>
+                                <p>Completed</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4 id="stat-pending" style="color: #ffc107;">0</h4>
+                                <p>Pending</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4 id="stat-rate" style="color: #3454d1;">0%</h4>
+                                <p>Success Rate</p>
+                            </div>
+                        </div>
+
+                        <div class="charts-grid">
+                            <div class="chart-container">
+                                <h3>Completion Distribution</h3>
+                                <canvas id="completionChart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Priority Breakdown</h3>
+                                <canvas id="priorityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help View -->
+            <div id="help-view" style="display: none;">
+                <div class="nav-bar">
+                    <h2>Help & Support</h2>
+                </div>
+                <div class="content-area">
+                    <div class="help-container">
+                        <section class="help-section">
+                            <h3>Frequently Asked Questions</h3>
+                            <div class="faq-list">
+                                <div class="faq-item">
+                                    <div class="faq-question">How do I add a task? <span class="arrow">▾</span></div>
+                                    <div class="faq-answer">Simply type your task into the input bar at the top of the
+                                        dashboard and press Enter or click the plus button.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">Can I organize tasks into projects? <span
+                                            class="arrow">▾</span></div>
+                                    <div class="faq-answer">Yes! Click on the 'Projects' tab in the sidebar to create
+                                        folders and group your tasks by project.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">How does the analytics work? <span class="arrow">▾</span>
+                                    </div>
+                                    <div class="faq-answer">The Analytics tab tracks your completed vs. pending tasks
+                                        and visualizes them through interactive charts.</div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="help-section">
+                            <h3>Contact Us</h3>
+                            <form id="contact-form" class="support-form">
+                                <input type="text" placeholder="Subject" required>
+                                <textarea placeholder="Describe your issue..." rows="4" required></textarea>
+                                <button type="submit">Submit Ticket</button>
+                            </form>
+                            <div id="contact-message" style="margin-top: 10px; display: none; color: #28a745;">Success!
+                                Our team will get back to you soon.</div>
+                        </section>
+
+                        <section class="help-section about-app">
+                            <h3>About ToDo App v2.0</h3>
+                            <p>A modern, high-performance task management tool designed for productivity and ease of
+                                use.</p>
+                            <div class="support-links">
+                                <a href="#">User Manual</a>
+                                <a href="#">Privacy Policy</a>
+                                <a href="#">Terms of Service</a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" style="display: none;">
+                <div class="settings-container">
+                    <h2 class="settings-title">Settings</h2>
+
+                    <!-- Account Settings Section -->
+                    <div class="settings-section">
+                        <h3 class="section-title">Account Settings</h3>
+                        <div class="settings-card">
+                            <div class="form-group">
+                                <label for="settings-profile-pic-display">Profile Picture</label>
+                                <div class="profile-pic-upload">
+                                    <img id="settings-profile-pic" src="images/user.svg" alt="Profile"
+                                        class="settings-profile-img">
+                                    <input type="file" id="settings-profile-pic-input" accept="image/*"
+                                        style="display: none;">
+                                    <button type="button" id="change-pic-btn" class="btn btn-secondary">Change
+                                        Picture</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-username">Name</label>
+                                <input type="text" id="settings-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-email">Email Address</label>
+                                <input type="email" id="settings-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-password">New Password (leave blank to keep current)</label>
+                                <input type="password" id="settings-password" placeholder="Min 6 characters">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App Preferences Section -->
+                    <div class="settings-section">
+                        <h3 class="section-title">App Preferences</h3>
+                        <div class="settings-card">
+                            <div class="form-group">
+                                <label>Notifications</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="notify-push">
+                                        <span>Push Notifications</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="notify-email">
+                                        <span>Email Reminders</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="theme-select">Theme</label>
+                                <select id="theme-select">
+                                    <option value="light">Light Mode</option>
+                                    <option value="dark">Dark Mode</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="default-view-select">Default View</label>
+                                <select id="default-view-select">
+                                    <option value="all">All Tasks</option>
+                                    <option value="today">Today</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="overdue">Overdue</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="language-select">Language</label>
+                                <select id="language-select">
+                                    <option value="en">English</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Management Section -->
+                    <div class="settings-section">
+                        <h3 class="section-title">Data Management</h3>
+                        <div class="settings-card">
+                            <div class="data-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button type="button" id="export-data-btn" class="btn btn-secondary">Export My Data
+                                    (JSON)</button>
+                                <button type="button" id="clear-tasks-btn" class="btn btn-danger">Clear All
+                                    Tasks</button>
+                                <button type="button" id="clear-projects-btn" class="btn btn-danger">Clear All
+                                    Projects</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="settings-actions">
+                        <button type="button" id="back-to-dashboard-btn" class="btn btn-secondary">Back to
+                            Dashboard</button>
+                        <button type="button" id="save-settings-btn" class="btn btn-primary">Save Changes</button>
+                    </div>
+                    <div id="settings-message" class="message"></div>
                 </div>
             </div>
         </div>
