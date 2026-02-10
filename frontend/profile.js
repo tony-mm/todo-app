@@ -1,4 +1,4 @@
-const AUTH_URL = 'http://127.0.0.1:3000/auth';
+const AUTH_URL = '/auth';
 const token = localStorage.getItem('token');
 const form = document.getElementById('profile-form');
 const usernameInput = document.getElementById('username');

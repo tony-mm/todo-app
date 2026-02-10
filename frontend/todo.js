@@ -33,8 +33,8 @@ const backToLogin = document.getElementById('back-to-login');
 
 let tasks = [];
 let currentFilter = 'all';
-const API_URL = 'http://localhost:3000/todos';
-const AUTH_URL = 'http://localhost:3000/auth';
+const API_URL = '/todos';
+const AUTH_URL = '/auth';
 let currentUser = null;
 let token = localStorage.getItem('token');
 
@@ -297,7 +297,7 @@ function initHelpView() {
 // PROJECT LOGIC
 // ----------------------------------------------------
 
-const PROJECTS_API_URL = 'http://localhost:3000/projects';
+const PROJECTS_API_URL = '/projects';
 const projectListContainer = document.getElementById('projects-list-container');
 const projectNameInput = document.getElementById('project-name-input');
 const projectDescInput = document.getElementById('project-desc-input');
